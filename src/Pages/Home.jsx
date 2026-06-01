@@ -1,0 +1,233 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Navbar from '../Compound/Navbar';
+import Footer from '../Compound/Footer';
+import { useAppState } from '../Compound/StateContext';
+import '../Asset/CSS/style.css';
+
+export default function Home() {
+  const { appState } = useAppState();
+
+  const studentsCount = appState?.allStudents?.length || 1200;
+  const facultyCount = appState?.faculties?.length || 80;
+  const deptsCount = appState?.departments?.length || 4;
+  const coursesCount = appState?.allCourses?.length || 25;
+
+  return (
+    <>
+      <Navbar />
+
+      <section className="hero-modern">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-md-6">
+              <p className="small-title">SMART EDUCATION MANAGEMENT</p>
+              <h1 className="main-heading">
+                Digital College
+                <span> Management System</span>
+              </h1>
+              <p className="hero-para">
+                EduManage is a web-based platform that helps colleges manage students,
+                faculty, attendance, courses, exams, results, fees and announcements
+                in one simple digital system.
+              </p>
+              <Link to="/login">
+                <button className="start-btn">Get Started</button>
+              </Link>
+              <Link to="/about">
+                <button className="learn-btn">Learn More</button>
+              </Link>
+            </div>
+
+            <div className="col-md-6">
+              <div className="dashboard-preview">
+                <div className="preview-card">
+                  <h3>Students</h3>
+                  <h1>{studentsCount}+</h1>
+                </div>
+                <div className="preview-card">
+                  <h3>Attendance</h3>
+                  <h1>92%</h1>
+                </div>
+                <div className="preview-card">
+                  <h3>Faculty</h3>
+                  <h1>{facultyCount}+</h1>
+                </div>
+                <div className="preview-card">
+                  <h3>Courses</h3>
+                  <h1>{coursesCount}+</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="container py-5 text-center">
+        <h2 className="title">Main Features</h2>
+        <div className="row mt-4">
+          <div className="col-md-3">
+            <div className="box">
+              <h3>Student Management</h3>
+              <p>Manage student profiles, roll numbers, departments and academic records.</p>
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="box">
+              <h3>Faculty Management</h3>
+              <p>Store faculty details, subjects handled and department information.</p>
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="box">
+              <h3>Attendance Tracking</h3>
+              <p>Track daily attendance and generate attendance reports easily.</p>
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="box">
+              <h3>Result Management</h3>
+              <p>Upload marks, view results and manage student performance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="light-section">
+        <div className="container">
+          <h2 className="title text-center">How It Works</h2>
+          <div className="row mt-4">
+            <div className="col-md-4">
+              <div className="info-box">
+                <h3>1. Login</h3>
+                <p>Students, faculty and admin can login using their role-based account.</p>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="info-box">
+                <h3>2. Manage Data</h3>
+                <p>Admin can manage student details, faculty records, courses and reports.</p>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="info-box">
+                <h3>3. View Updates</h3>
+                <p>Users can view attendance, marks, announcements and timetable updates.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="container py-5">
+        <h2 className="title text-center">User Roles</h2>
+        <div className="row mt-4">
+          <div className="col-md-4">
+            <div className="role-card">
+              <h3>Students</h3>
+              <p>Students can view attendance, results, courses, timetable and announcements.</p>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="role-card">
+              <h3>Faculty</h3>
+              <p>Faculty can mark attendance, upload marks and manage subject-related updates.</p>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="role-card">
+              <h3>Admin</h3>
+              <p>Admin can control students, faculty, departments, courses and overall system data.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="benefit-section">
+        <div className="container">
+          <h2 className="title text-center">Why This System Is Useful?</h2>
+          <div className="row mt-4">
+            <div className="col-md-6">
+              <ul className="benefits">
+                <li>Reduces manual paperwork</li>
+                <li>Saves time for staff and students</li>
+                <li>Provides centralized data access</li>
+                <li>Improves communication between users</li>
+                <li>Helps manage academic activities easily</li>
+              </ul>
+            </div>
+            <div className="col-md-6">
+              <div className="info-box">
+                <h3>Project Purpose</h3>
+                <p>
+                  The main purpose of this College Management System is to make academic
+                  and administrative work easier. Instead of maintaining records manually,
+                  the system stores important data digitally and allows users to access
+                  information quickly.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="container stats py-5">
+        <h2>Our College at a Glance</h2>
+        <div className="row mt-4">
+          <div className="col-md-3">
+            <div className="card">
+              <h1>{studentsCount}+</h1>
+              <p>Students</p>
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="card">
+              <h1>{facultyCount}+</h1>
+              <p>Faculty</p>
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="card">
+              <h1>{coursesCount}+</h1>
+              <p>Courses</p>
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="card">
+              <h1>{deptsCount}+</h1>
+              <p>Departments</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="light-section">
+        <div className="container">
+          <h2 className="title text-center">System Modules</h2>
+          <div className="row mt-4">
+            <div className="col-md-4">
+              <div className="info-box">
+                <h3>Attendance Module</h3>
+                <p>Maintains student attendance and percentage details.</p>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="info-box">
+                <h3>Exam Module</h3>
+                <p>Manages exam schedules, marks and result information.</p>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="info-box">
+                <h3>Communication Module</h3>
+                <p>Shares announcements and important updates with users.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </>
+  );
+}

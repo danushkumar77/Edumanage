@@ -1,0 +1,407 @@
+/* 
+   EduManage College - Simplified Student Dashboard Stylesheet
+   Inherits from main style.css and adds dashboard card/tab styles.
+*/
+
+:root {
+    --dash-primary: #0026ff;
+    --dash-gold: #ffd700;
+    --dash-bg: #f8fafc;
+    --dash-card-bg: #ffffff;
+    --dash-border: #e2e8f0;
+    --dash-text: #0f172a;
+    --dash-muted: #64748b;
+    --dash-success: #10b981;
+    --dash-danger: #ef4444;
+    --dash-warning: #f59e0b;
+}
+
+body {
+    background-color: var(--dash-bg) !important;
+    font-family: Arial, sans-serif;
+    color: var(--dash-text);
+}
+
+/* Dashboard Outer Layout */
+.dashboard-container {
+    padding: 30px 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Student Info Banner */
+.student-welcome-banner {
+    background: linear-gradient(135deg, var(--dash-primary), #001299);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    border-bottom: 5px solid var(--dash-gold);
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 38, 255, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.student-welcome-banner h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.student-welcome-banner p {
+    margin: 0;
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+.student-banner-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.banner-stat-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 8px;
+    border-left: 3px solid var(--dash-gold);
+    min-width: 120px;
+}
+
+.banner-stat-box h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.banner-stat-box p {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+/* Tab Pills Navigation */
+.dash-nav-pills {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--dash-border);
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.dash-pill-btn {
+    background: white;
+    color: var(--dash-text);
+    border: 1px solid var(--dash-border);
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0;
+}
+
+.dash-pill-btn:hover {
+    border-color: var(--dash-primary) !important;
+    color: var(--dash-primary) !important;
+    background-color: #f8fafc !important;
+}
+
+.dash-pill-btn.active {
+    background-color: #eef2ff !important; /* Soft modern light blue background */
+    color: var(--dash-primary) !important; /* Primary rich blue text */
+    border-color: var(--dash-primary) !important;
+    box-shadow: 0 4px 12px rgba(0, 38, 255, 0.08) !important;
+}
+
+
+
+/* Card Styling */
+.dash-card {
+    background: var(--dash-card-bg);
+    border: 1px solid var(--dash-border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.dash-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--dash-primary);
+    border-bottom: 2px solid var(--dash-bg);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Tab panes animations */
+.dash-pane {
+    display: none;
+    animation: slideUp 0.3s ease forwards;
+}
+
+.dash-pane.active {
+    display: block;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dynamic Progress Bar */
+.dash-progress-track {
+    background-color: #e2e8f0;
+    height: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.dash-progress-fill {
+    height: 100%;
+    background-color: var(--dash-primary);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+/* Bulletin/Notice Board */
+.bulletin-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.bulletin-item {
+    background: var(--dash-bg);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--dash-primary);
+}
+
+.bulletin-item.urgent {
+    border-left-color: var(--dash-danger);
+}
+
+.bulletin-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--dash-muted);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Table overrides */
+.dash-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dash-table th {
+    background-color: var(--dash-bg);
+    color: var(--dash-muted);
+    font-weight: bold;
+    font-size: 13px;
+    padding: 12px 15px;
+    border-bottom: 2px solid var(--dash-border);
+}
+
+.dash-table td {
+    padding: 14px 15px;
+    border-bottom: 1px solid var(--dash-border);
+    font-size: 14px;
+}
+
+.dash-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Badges */
+.dash-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.dash-badge-success { background: #d1fae5; color: var(--dash-success); }
+.dash-badge-danger { background: #fee2e2; color: var(--dash-danger); }
+.dash-badge-warning { background: #fef3c7; color: var(--dash-warning); }
+
+/* Float Buttons */
+.dash-btn-sm {
+    background-color: var(--dash-primary);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dash-btn-sm:hover {
+    background-color: #132cce;
+}
+
+.dash-btn-outline-sm {
+    background: none;
+    border: 1px solid var(--dash-border);
+    color: var(--dash-text);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dash-btn-outline-sm:hover {
+    background-color: var(--dash-bg);
+}
+
+/* Profile Form styling */
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.profile-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-group label {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--dash-muted);
+}
+
+.profile-group input, .profile-group textarea {
+    padding: 10px;
+    border: 1px solid var(--dash-border);
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.profile-group input:focus, .profile-group textarea:focus {
+    border-color: var(--dash-primary);
+}
+
+/* Modal Overlay Styles */
+.dash-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.dash-modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.dash-modal-box {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.dash-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.dash-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--dash-primary);
+}
+
+.dash-modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--dash-muted);
+}
+
+.dash-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Toast Notifier */
+.dash-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--dash-text);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    z-index: 1000;
+    font-size: 14px;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dash-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media screen and (max-width: 768px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.dash-pill-btn.active {
+    background: linear-gradient(90deg, #0026ff, #4f6fff) !important;
+    color: white !important;
+    border-color: #212dac !important;
+}
+
+.dash-pill-btn.active * {
+    color: white !important;
+}
