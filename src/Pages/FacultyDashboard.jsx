@@ -15,6 +15,9 @@ export default function FacultyDashboard() {
   // Tab control state
   const [activeTab, setActiveTab] = useState('overview');
 
+  // Search queries state
+  const [studentSearch, setStudentSearch] = useState('');
+
   // Attendance filter state
   const [attendanceCourse, setAttendanceCourse] = useState('CS201');
 
@@ -191,6 +194,7 @@ export default function FacultyDashboard() {
         {/* Dashboard Sub-Navigation Tabs deck */}
         <div className="dash-nav-pills">
           <button className={`dash-pill-btn ${activeTab === 'overview' ? 'active' : ''}`} onClick={() => setActiveTab('overview')}><i className="fa-solid fa-square-poll-vertical"></i> Overview</button>
+          <button className={`dash-pill-btn ${activeTab === 'students' ? 'active' : ''}`} onClick={() => setActiveTab('students')}><i className="fa-solid fa-user-graduate"></i> Students</button>
           <button className={`dash-pill-btn ${activeTab === 'attendance' ? 'active' : ''}`} onClick={() => setActiveTab('attendance')}><i className="fa-solid fa-clipboard-user"></i> Attendance Registry</button>
           <button className={`dash-pill-btn ${activeTab === 'grading' ? 'active' : ''}`} onClick={() => setActiveTab('grading')}><i className="fa-solid fa-pen-ruler"></i> Grading Portal</button>
           <button className={`dash-pill-btn ${activeTab === 'notices' ? 'active' : ''}`} onClick={() => setActiveTab('notices')}><i className="fa-solid fa-bullhorn"></i> Publish Notice</button>
@@ -260,7 +264,64 @@ export default function FacultyDashboard() {
           </div>
         )}
 
-        {/* TAB 2: ATTENDANCE REGISTRY */}
+        {/* TAB 2: STUDENTS REGISTRY */}
+        {activeTab === 'students' && (
+          <div className="dash-pane active" id="pane-faculty-students">
+            <div className="dash-card">
+              <div className="dash-card-title d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <span><i className="fa-solid fa-user-graduate"></i> Enrolled Students Registry</span>
+                <input 
+                  type="text" 
+                  placeholder="Search Enrolled Students..." 
+                  value={studentSearch}
+                  onChange={e => setStudentSearch(e.target.value)}
+                  style={{ padding: '6px 12px', border: '1px solid var(--dash-border)', borderRadius: '6px', fontSize: '13px', outline: 'none', width: '250px', background: 'white' }}
+                />
+              </div>
+              <div className="table-responsive mt-3">
+                <table className="dash-table">
+                  <thead>
+                    <tr>
+                      <th>Student ID</th>
+                      <th>Name</th>
+                      <th>Roll Number</th>
+                      <th>Department</th>
+                      <th>Year & Sem</th>
+                      <th>Email Address</th>
+                      <th>Mobile Number</th>
+                      <th>Global Attendance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(appState.allStudents || [])
+                      .filter(s => s.name.toLowerCase().includes(studentSearch.toLowerCase()) || s.rollNo.toLowerCase().includes(studentSearch.toLowerCase()) || s.dept.toLowerCase().includes(studentSearch.toLowerCase()))
+                      .map((s) => {
+                        let badgeClass = 'dash-badge-success';
+                        if (s.attendance < 75) badgeClass = 'dash-badge-danger';
+                        else if (s.attendance < 85) badgeClass = 'dash-badge-warning';
+
+                        return (
+                          <tr key={s.id}>
+                            <td><strong>{s.id}</strong></td>
+                            <td>{s.name}</td>
+                            <td><strong>{s.rollNo}</strong></td>
+                            <td>{s.dept}</td>
+                            <td>Year {s.year} &bull; Sem {s.semester}</td>
+                            <td>{s.email}</td>
+                            <td>{s.phone}</td>
+                            <td><span className={`dash-badge ${badgeClass}`}>{s.attendance}%</span></td>
+                          </tr>
+                        );
+                      })
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 3: ATTENDANCE REGISTRY */}
         {activeTab === 'attendance' && (
           <div className="dash-pane active" id="pane-faculty-attendance">
             <div className="dash-card">
@@ -316,12 +377,20 @@ export default function FacultyDashboard() {
                           <td>{s.conducted} lectures</td>
                           <td><span className={`dash-badge ${badgeClass}`}>{pct}%</span></td>
                           <td style={{ textAlign: 'right' }}>
-                            <div style={{ display: 'flex', gap: '6px', justifyContent: 'flex-end' }}>
-                              <button className="dash-btn-sm" onClick={() => markRollCall(s.rollNo, attendanceCourse, true)} style={{ backgroundColor: 'var(--dash-success)' }}>
-                                <i className="fa-solid fa-circle-plus"></i> Present
+                            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                              <button 
+                                onClick={() => markRollCall(s.rollNo, attendanceCourse, true)} 
+                                style={{ background: '#10b981', color: 'white', border: 'none', padding: '6px 14px', borderRadius: '20px', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '12px', cursor: 'pointer', transition: 'all 0.2s ease', boxShadow: '0 2px 6px rgba(16, 185, 129, 0.2)' }}
+                                title="Mark student present"
+                              >
+                                <i className="fa-solid fa-circle-check"></i> Present
                               </button>
-                              <button className="dash-btn-outline-sm" onClick={() => markRollCall(s.rollNo, attendanceCourse, false)}>
-                                <i className="fa-solid fa-circle-minus"></i> Absent
+                              <button 
+                                onClick={() => markRollCall(s.rollNo, attendanceCourse, false)} 
+                                style={{ background: '#fee2e2', color: '#ef4444', border: '1.5px solid #fca5a5', padding: '5px 13px', borderRadius: '20px', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '12px', cursor: 'pointer', transition: 'all 0.2s ease' }}
+                                title="Mark student absent"
+                              >
+                                <i className="fa-solid fa-circle-xmark"></i> Absent
                               </button>
                             </div>
                           </td>
