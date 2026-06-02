@@ -276,6 +276,79 @@ export const StateProvider = ({ children }) => {
 
   const submitApplication = (appData) => {
     localStorage.setItem('applicationData', JSON.stringify(appData));
+    
+    // Retrieve signupData to get the student's chosen password
+    let password = "student123"; // default fallback
+    let signupPhone = appData.parentMobile;
+    
+    try {
+      const storedSignup = localStorage.getItem('signupData');
+      if (storedSignup) {
+        const signupObj = JSON.parse(storedSignup);
+        if (signupObj.password) password = signupObj.password;
+        if (signupObj.phone) signupPhone = signupObj.phone;
+      }
+    } catch (e) {
+      console.error("Error reading signupData during application submission:", e);
+    }
+
+    // Register this student into our appState.allStudents database
+    const newStudent = {
+      id: `STD-${Math.floor(1000 + Math.random() * 9000)}`,
+      name: appData.studentName,
+      rollNo: appData.registerNumber,
+      dept: appData.department,
+      year: appData.year.includes('1') ? '1' : appData.year.includes('2') ? '2' : appData.year.includes('3') ? '3' : '4',
+      semester: appData.year.includes('1') ? 1 : appData.year.includes('2') ? 3 : appData.year.includes('3') ? 5 : 7,
+      email: appData.applicationEmail,
+      phone: signupPhone,
+      attendance: 100, // New student has perfect initial attendance
+      password: password
+    };
+
+    // Add to allStudents
+    const nextAllStudents = [...(appState.allStudents || [])];
+    // Avoid duplicates if email already registered
+    const existsIdx = nextAllStudents.findIndex(s => s.email && s.email.toLowerCase() === appData.applicationEmail.toLowerCase());
+    if (existsIdx !== -1) {
+      nextAllStudents[existsIdx] = { ...nextAllStudents[existsIdx], ...newStudent };
+    } else {
+      nextAllStudents.push(newStudent);
+    }
+
+    // Seed student registers in course attendance registries
+    let nextAttendanceDb = { ...(appState.attendanceDb || {}) };
+    Object.keys(nextAttendanceDb).forEach(cCode => {
+      // Add if not already present
+      const hasStudent = nextAttendanceDb[cCode].some(s => s.rollNo === newStudent.rollNo);
+      if (!hasStudent) {
+        nextAttendanceDb[cCode].push({
+          rollNo: newStudent.rollNo,
+          name: newStudent.name,
+          dept: newStudent.dept,
+          attended: 0,
+          conducted: 0
+        });
+      }
+    });
+
+    // Save and log activity
+    const nextState = logActivity(`Registered student from Admission Application: ${newStudent.name}`, 'success', {
+      ...appState,
+      allStudents: nextAllStudents,
+      attendanceDb: nextAttendanceDb,
+      adminNotification: `New student "${newStudent.name}" has successfully registered and submitted their Admission Application form. Registered Student ID: ${newStudent.id} (Dept: ${newStudent.dept}, Year: ${appData.year}).`,
+      lastApplication: appData
+    });
+    saveState(nextState);
+  };
+
+  const clearNotification = () => {
+    const nextState = {
+      ...appState,
+      adminNotification: null
+    };
+    saveState(nextState);
   };
 
   // Logger Helper
@@ -815,6 +888,7 @@ export const StateProvider = ({ children }) => {
       removeCourse,
       postNotice,
       deleteNotice,
+      clearNotification,
       reseedDatabase
     }}>
       {children}
