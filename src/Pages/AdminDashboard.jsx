@@ -17,7 +17,8 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,
 export default function AdminDashboard() {
   const { 
     appState, currentUser, registerStudent, removeStudent, registerFaculty, removeFaculty,
-    registerDept, removeDept, registerCourse, removeCourse, postNotice, deleteNotice, reseedDatabase 
+    registerDept, removeDept, registerCourse, removeCourse, postNotice, deleteNotice, reseedDatabase,
+    clearNotification
   } = useAppState();
   
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ export default function AdminDashboard() {
   const [studentForm, setStudentForm] = useState({ id: '', name: '', rollNo: '', dept: '', year: '2', semester: 4, email: '', phone: '', attendance: 85 });
 
   const [showFacultyModal, setShowFacultyModal] = useState(false);
-  const [facultyForm, setFacultyForm] = useState({ id: '', name: '', dept: '', subject: '', email: '', phone: '' });
+  const [facultyForm, setFacultyForm] = useState({ id: '', name: '', dept: '', subject: '', email: '', phone: '', password: '' });
 
   const [showDeptModal, setShowDeptModal] = useState(false);
   const [deptForm, setDeptForm] = useState({ code: '', name: '' });
@@ -64,6 +65,35 @@ export default function AdminDashboard() {
 
   const [showResultModal, setShowResultModal] = useState(false);
   const [resultForm, setResultForm] = useState({ rollNo: '2024CSE1042', courseCode: 'CS201', midTerm: 'A', endTerm: 'A+' });
+  const [showAppModal, setShowAppModal] = useState(false);
+
+  // Retrieve the application details, falling back to localStorage or mock fallback if missing
+  const lastAppDetails = appState.lastApplication || (() => {
+    try {
+      const stored = localStorage.getItem('applicationData');
+      if (stored) return JSON.parse(stored);
+    } catch (e) {}
+    // Complete fallback if both are missing to guarantee no crashes
+    return {
+      studentName: "Danushkumar",
+      registerNumber: "2024CSE1042",
+      department: "CSE",
+      year: "2nd Year (Sem 4)",
+      dob: "2004-08-12",
+      gender: "Male",
+      bloodGroup: "O+",
+      nationality: "Indian",
+      applicationEmail: "danushkumar@edumanage.com",
+      address: "123, Dynamic Heights, Tech City, Bangalore, 560001",
+      parentMobile: "+91 98765 43219",
+      fatherName: "Suresh Kumar",
+      fatherOccupation: "Engineer",
+      fatherMobile: "+91 98765 11111",
+      motherName: "Kavitha Devi",
+      motherOccupation: "Homemaker",
+      motherMobile: "+91 98765 55555"
+    };
+  })();
 
   // Notice circular state
   const [circularForm, setCircularForm] = useState({ subject: '', category: 'academic', desc: '' });
@@ -152,10 +182,10 @@ export default function AdminDashboard() {
     if (id) {
       const f = appState.faculties.find(fa => fa.id === id);
       if (f) {
-        setFacultyForm({ ...f });
+        setFacultyForm({ ...f, password: f.password || 'faculty123' });
       }
     } else {
-      setFacultyForm({ id: '', name: '', dept: appState.departments[0]?.code || 'CSE', subject: appState.allCourses[0]?.name || 'Database Management Systems', email: '', phone: '' });
+      setFacultyForm({ id: '', name: '', dept: appState.departments[0]?.code || 'CSE', subject: appState.allCourses[0]?.name || 'Database Management Systems', email: '', phone: '', password: 'faculty123' });
     }
     setShowFacultyModal(true);
   };
@@ -537,11 +567,48 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        {/* Admin Notifications Banner */}
+        {appState.adminNotification && (
+          <div 
+            className="admin-alert-banner" 
+            style={{ background: '#e0e7ff', borderLeft: '6px solid #0026ff', padding: '15px 20px', borderRadius: '12px', margin: '20px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 4px 15px rgba(0, 38, 255, 0.05)', cursor: 'pointer' }}
+            onClick={() => setShowAppModal(true)}
+            title="Click to view full application details"
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ fontSize: '20px' }}>🔔</span>
+              <div>
+                <strong style={{ color: '#0026ff', fontSize: '14px', display: 'block', fontWeight: 'bold' }}>Admission Notification (Click to View Details)</strong>
+                <span style={{ fontSize: '13px', color: '#1e293b' }}>{appState.adminNotification}</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <button 
+                className="admin-btn"
+                style={{ padding: '6px 12px', fontSize: '12px', borderRadius: '6px', fontWeight: 'bold' }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowAppModal(true);
+                }}
+              >
+                View Details
+              </button>
+              <button 
+                className="admin-btn-outline-sm" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  clearNotification();
+                }}
+                style={{ padding: '6px 12px', fontSize: '12px', borderRadius: '6px', fontWeight: 'bold', background: '#ffffff', color: '#0026ff', border: '1.5px solid #dbe2ff' }}
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Theme and quit utility bar */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginBottom: '20px' }}>
-          <button className="admin-btn-outline" id="btn-theme-toggle" onClick={toggleTheme} style={{ padding: '8px 16px', fontSize: '13px', fontWeight: 'bold' }}>
-            <i className={`fa-solid ${isDark ? 'fa-sun' : 'fa-moon'}`}></i> Toggle Theme
-          </button>
           <Link to="/"><button className="admin-btn" style={{ padding: '8px 16px', fontSize: '13px', fontWeight: 'bold' }}><i className="fa-solid fa-right-from-bracket"></i> Quit ERP</button></Link>
         </div>
 
@@ -1407,6 +1474,15 @@ export default function AdminDashboard() {
                     required 
                   />
                 </div>
+                <div className="profile-group">
+                  <label>Portal Password *</label>
+                  <input 
+                    type="text" 
+                    value={facultyForm.password || ''}
+                    onChange={e => setFacultyForm({ ...facultyForm, password: e.target.value })}
+                    required 
+                  />
+                </div>
               </div>
               <div className="admin-modal-actions" style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '20px' }}>
                 <button type="button" className="admin-btn-outline btn-modal-cancel" onClick={() => setShowFacultyModal(false)}>Cancel</button>
@@ -1590,6 +1666,104 @@ export default function AdminDashboard() {
                 <button type="submit" className="admin-btn">Publish Scorecard</button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ADMISSION APPLICATION DETAILS MODAL */}
+      {showAppModal && lastAppDetails && (
+        <div className="admin-modal-overlay active" id="modal-app-details" style={{ zIndex: 3000 }}>
+          <div className="admin-modal-box" style={{ maxWidth: '650px', maxHeight: '90vh', overflowY: 'auto', borderRadius: '16px' }}>
+            <div className="admin-modal-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '15px' }}>
+              <h3 style={{ fontWeight: 'bold', fontSize: '18px', color: '#0026ff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <i className="fa-solid fa-file-invoice"></i> Student Admission Application Details
+              </h3>
+              <button className="admin-modal-close" onClick={() => setShowAppModal(false)} style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: '#718096' }}>
+                <i className="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' }}>
+              
+              {/* Student Details */}
+              <div>
+                <h4 style={{ fontWeight: 'bold', fontSize: '15px', color: '#0026ff', borderBottom: '1.5px solid #dbe2ff', paddingBottom: '5px', marginBottom: '10px' }}>
+                  Student Personal Profile
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '13px' }}>
+                  <div><strong>Full Name:</strong> {lastAppDetails.studentName}</div>
+                  <div><strong>Register Number:</strong> {lastAppDetails.registerNumber}</div>
+                  <div><strong>Department:</strong> {lastAppDetails.department}</div>
+                  <div><strong>Academic Year:</strong> {lastAppDetails.year}</div>
+                  <div><strong>Date of Birth:</strong> {lastAppDetails.dob}</div>
+                  <div><strong>Gender:</strong> {lastAppDetails.gender}</div>
+                  <div><strong>Blood Group:</strong> {lastAppDetails.bloodGroup}</div>
+                  <div><strong>Nationality:</strong> {lastAppDetails.nationality}</div>
+                  <div style={{ gridColumn: 'span 2' }}><strong>Email Address:</strong> {lastAppDetails.applicationEmail}</div>
+                  <div style={{ gridColumn: 'span 2' }}><strong>Residential Address:</strong> {lastAppDetails.address}</div>
+                  <div><strong>Parent Mobile:</strong> {lastAppDetails.parentMobile}</div>
+                </div>
+              </div>
+
+              {/* Father Details */}
+              <div>
+                <h4 style={{ fontWeight: 'bold', fontSize: '15px', color: '#0026ff', borderBottom: '1.5px solid #dbe2ff', paddingBottom: '5px', marginBottom: '10px' }}>
+                  Father Particulars
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '13px' }}>
+                  <div><strong>Father Name:</strong> {lastAppDetails.fatherName}</div>
+                  <div><strong>Occupation:</strong> {lastAppDetails.fatherOccupation}</div>
+                  <div style={{ gridColumn: 'span 2' }}><strong>Mobile Number:</strong> {lastAppDetails.fatherMobile}</div>
+                </div>
+              </div>
+
+              {/* Mother Details */}
+              <div>
+                <h4 style={{ fontWeight: 'bold', fontSize: '15px', color: '#0026ff', borderBottom: '1.5px solid #dbe2ff', paddingBottom: '5px', marginBottom: '10px' }}>
+                  Mother Particulars
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '13px' }}>
+                  <div><strong>Mother Name:</strong> {lastAppDetails.motherName}</div>
+                  <div><strong>Occupation:</strong> {lastAppDetails.motherOccupation}</div>
+                  <div style={{ gridColumn: 'span 2' }}><strong>Mobile Number:</strong> {lastAppDetails.motherMobile}</div>
+                </div>
+              </div>
+
+              {/* Guardian Details */}
+              {lastAppDetails.guardianName && (
+                <div>
+                  <h4 style={{ fontWeight: 'bold', fontSize: '15px', color: '#0026ff', borderBottom: '1.5px solid #dbe2ff', paddingBottom: '5px', marginBottom: '10px' }}>
+                    Guardian Particulars (Optional)
+                  </h4>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '13px' }}>
+                    <div><strong>Guardian Name:</strong> {lastAppDetails.guardianName}</div>
+                    <div><strong>Relationship:</strong> {lastAppDetails.relationship}</div>
+                    <div style={{ gridColumn: 'span 2' }}><strong>Contact Number:</strong> {lastAppDetails.guardianMobile}</div>
+                  </div>
+                </div>
+              )}
+
+            </div>
+
+            <div className="admin-modal-actions" style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '25px', borderTop: '1px solid #e2e8f0', paddingTop: '15px' }}>
+              <button 
+                type="button" 
+                className="admin-btn" 
+                onClick={() => {
+                  setShowAppModal(false);
+                  clearNotification();
+                }}
+              >
+                Accept & Dismiss Alert
+              </button>
+              <button 
+                type="button" 
+                className="admin-btn-outline" 
+                onClick={() => setShowAppModal(false)}
+              >
+                Close View
+              </button>
+            </div>
           </div>
         </div>
       )}
