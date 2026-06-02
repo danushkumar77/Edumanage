@@ -65,6 +65,11 @@ body{
     color:gold;
 }
 
+/* Hamburger toggle hidden on desktop */
+.hamburger-btn {
+    display: none;
+}
+
 /* Dropdown */
 
 .dropdown{
@@ -177,7 +182,7 @@ button{
 
 .learn-btn{
     background:white;
-    color:#0026ff;
+    color:#1a1ad1;
     padding:14px 32px;
     border-radius:30px;
     font-weight:bold;
@@ -362,59 +367,175 @@ button{
 @media screen and (max-width:768px){
 
     .main-navbar{
-        flex-direction:column;
-        text-align:center;
-        padding:14px 10px;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 10px 20px !important;
+        height: 70px !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1000 !important;
     }
 
     .logo img{
-        width:200px;
-        height:auto;
-        margin-bottom:10px;
+        width: 120px !important;
+        height: auto !important;
+        margin-bottom: 0 !important;
     }
 
-    .menu{
-        display:flex;
-        flex-wrap:wrap;
-        justify-content:center;
-        align-items:center;
-        gap:12px;
-        margin-top:8px;
+    /* Hamburger Toggle Button Style */
+    .hamburger-btn {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: none !important;
+        border: none !important;
+        outline: none !important;
+        cursor: pointer !important;
+        padding: 8px !important;
+        transition: all 0.3s ease !important;
+        z-index: 1001 !important;
     }
 
-    .menu a{
-        display:inline-block;
-        font-size:12px;
-        margin:0;
+    .hamburger-btn i {
+        color: white !important;
+        font-size: 24px !important;
+        transition: transform 0.3s ease !important;
     }
 
-    .dropdown{
-        display:inline-block;
-        margin:0;
+    .hamburger-btn.active i {
+        transform: rotate(90deg) !important;
+        color: gold !important;
     }
 
-    .dropbtn{
-        font-size:12px;
-        margin:0;
+    /* Vertical Drawer Menu with Premium Glassmorphism */
+    .menu {
+        position: absolute !important;
+        top: 70px !important; /* Exactly below the 70px navbar */
+        left: 0 !important;
+        width: 100% !important;
+        background: rgba(0, 17, 61, 0.98) !important; /* Solid brand base color */
+        backdrop-filter: blur(15px) !important; /* Premium blur */
+        -webkit-backdrop-filter: blur(15px) !important;
+        border-bottom: 4px solid gold !important;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+        padding: 10px 0 !important;
+        margin: 0 !important;
+        z-index: 999 !important;
+        
+        /* Sliding Transition States */
+        max-height: 0 !important;
+        opacity: 0 !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease !important;
     }
 
-    .dropdown-content{
-        position:absolute;
-        top:25px;
-        right:-40px;
-        min-width:180px;
-        background:white;
-        box-shadow:0 8px 16px rgba(0,0,0,0.15);
+    .menu.active {
+        max-height: 550px !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        overflow-y: auto !important;
     }
 
-    .dropdown-content a{
-        color:#1e293b !important;
-        text-align:left;
+    .menu a {
+        display: block !important;
+        width: 100% !important;
+        text-align: left !important;
+        padding: 14px 25px !important;
+        color: white !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        transition: all 0.2s ease !important;
+        letter-spacing: 0.5px !important;
     }
 
-    .main-heading{
-        font-size:42px;
-        line-height:55px;
+    .menu a:hover,
+    .menu a:active {
+        background: rgba(255, 255, 255, 0.08) !important;
+        color: gold !important;
+        padding-left: 32px !important; /* Premium hover slide effect */
+    }
+
+    /* Mobile Dropdown Styling */
+    .dropdown {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .dropbtn {
+        width: 100% !important;
+        justify-content: space-between !important;
+        padding: 14px 25px !important;
+        color: white !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        background: none !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .dropbtn:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+        color: gold !important;
+    }
+
+    .dropdown-content {
+        position: relative !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        background: rgba(0, 0, 0, 0.18) !important; /* Hierarchical visual grouping */
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        max-height: 0 !important;
+        opacity: 0 !important;
+        overflow: hidden !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transition: max-height 0.3s ease, opacity 0.3s ease !important;
+    }
+
+    .dropdown.show .dropdown-content {
+        max-height: 200px !important;
+        opacity: 1 !important;
+    }
+
+    .dropdown-content a {
+        padding: 12px 25px 12px 40px !important; /* Indented for visual hierarchy */
+        color: rgba(255, 255, 255, 0.85) !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        background: none !important;
+        border-bottom: none !important;
+    }
+
+    .dropdown-content a:hover {
+        background: rgba(255, 255, 255, 0.05) !important;
+        color: gold !important;
+        padding-left: 45px !important;
+    }
+
+    .dropdown-content::before {
+        display: none !important;
+    }
+
+    /* Page Elements */
+    .main-heading {
+        font-size: 42px;
+        line-height: 55px;
     }
 
     .hero-modern{
@@ -471,4 +592,136 @@ button{
     max-width: 700px;
     margin: 0 auto;
     opacity: 0.9;
+}
+
+/* ==========================================================================
+   Premium Global Button Contrast & Navbar Info Alignment Styles
+   ========================================================================== */
+
+/* 1. Global black text override for all buttons (supporting the user preference) */
+button,
+.start-btn,
+.learn-btn,
+.admin-btn,
+.admin-btn-outline,
+.admin-btn-danger-sm,
+.admin-btn-outline-sm,
+.dash-btn-sm,
+.dash-btn-outline-sm,
+.dash-pill-btn,
+.admin-pill-btn,
+button[type="submit"],
+.btn-primary,
+.btn {
+    color: #000000 !important;
+}
+
+/* 2. Active Tab Pill Button Premium Style - Soft light blue background with dark blue border & black text */
+.dash-pill-btn.active,
+.admin-pill-btn.active {
+    background-color: #eef2ff !important;
+    background: #eef2ff !important;
+    color: #000000 !important;
+    border: 1px solid #0026ff !important;
+    border-color: #0026ff !important;
+    box-shadow: 0 4px 12px rgba(0, 38, 255, 0.08) !important;
+}
+.dash-pill-btn.active *,
+.admin-pill-btn.active * {
+    color: #000000 !important;
+}
+
+/* 3. Primary CTA buttons (Start Button, Submit, Admin, Primary buttons) light background support */
+.start-btn {
+    background: #ffd700 !important; /* Premium Gold Background */
+    border: 2px solid #ffd700 !important;
+    color: #000000 !important;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2) !important;
+}
+.start-btn:hover {
+    background: #ffc107 !important; /* Slightly darker gold on hover */
+    border-color: #ffc107 !important;
+    transform: translateY(-2px) !important;
+}
+
+.admin-btn,
+.dash-btn-sm,
+.btn-primary,
+button[type="submit"] {
+    background-color: #eef2ff !important; /* Soft premium light blue */
+    background: #eef2ff !important;
+    color: #000000 !important;
+    border: 1.5px solid #0026ff !important;
+    font-weight: bold !important;
+    box-shadow: 0 2px 6px rgba(0, 38, 255, 0.04) !important;
+}
+
+.admin-btn:hover,
+.dash-btn-sm:hover,
+.btn-primary:hover,
+button[type="submit"]:hover {
+    background-color: #ffd700 !important; /* Gold hover for vibrant response */
+    background: #ffd700 !important;
+    border-color: #ffd700 !important;
+    color: #000000 !important;
+}
+
+/* 4. Danger Action Button Premium Style - Soft pink background with red text */
+.admin-btn-danger-sm {
+    background-color: #fee2e2 !important;
+    background: #fee2e2 !important;
+    color: #b91c1c !important; /* Dark red text for maximum readability */
+    border: 1.5px solid #f87171 !important;
+}
+.admin-btn-danger-sm:hover {
+    background-color: #fca5a5 !important;
+    background: #fca5a5 !important;
+    color: #7f1d1d !important;
+}
+
+/* 5. Exclude Navbar dropdown button ("INFO") from global black text override and align it (Desktop Only) */
+@media screen and (min-width: 769px) {
+    .dropdown {
+        display: inline-flex !important;
+        align-items: center !important;
+        position: relative !important;
+        vertical-align: middle !important;
+    }
+
+    .dropbtn {
+        color: white !important;
+        background: none !important;
+        border: none !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+        padding: 0 !important;
+        font-family: Arial, sans-serif !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        margin: 0 !important;
+        line-height: normal !important;
+        vertical-align: middle !important;
+    }
+
+    .dropdown:focus-within .dropbtn,
+    .dropdown.show .dropbtn,
+    .dropbtn:hover {
+        color: gold !important;
+    }
+
+    /* 6. Dropdown Hover & Bridge Gap Fix */
+    .dropdown:hover .dropdown-content {
+        display: block !important;
+    }
+
+    .dropdown-content::before {
+        content: '';
+        position: absolute;
+        top: -30px; /* Bridge the 28px physical gap above the menu */
+        left: 0;
+        right: 0;
+        height: 30px;
+        background: transparent;
+    }
 }

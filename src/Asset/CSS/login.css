@@ -218,7 +218,7 @@ a:hover{
     background:none;
     margin-bottom:0;
     padding: 10px 0;
-    width: 100%;
+    flex: 1;
 }
 
 .input-box input:focus {

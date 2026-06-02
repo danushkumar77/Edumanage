@@ -396,12 +396,4 @@ body {
         grid-template-columns: 1fr;
     }
 }
-.dash-pill-btn.active {
-    background: linear-gradient(90deg, #0026ff, #4f6fff) !important;
-    color: white !important;
-    border-color: #212dac !important;
-}
 
-.dash-pill-btn.active * {
-    color: white !important;
-}
