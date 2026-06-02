@@ -6,11 +6,13 @@ import logoImg from '../Asset/Images/logo.png';
 export default function Navbar() {
   const { currentUser, logout } = useAppState();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = (e) => {
     e.preventDefault();
     logout();
+    setIsMobileOpen(false);
     navigate('/login');
   };
 
@@ -28,20 +30,44 @@ export default function Navbar() {
     return 'DASHBOARD';
   };
 
+  const handleLinkClick = () => {
+    setTimeout(() => {
+      setShowDropdown(false);
+      setIsMobileOpen(false);
+    }, 150);
+  };
+
+  const handleNormalLinkClick = () => {
+    setIsMobileOpen(false);
+  };
+
   return (
     <div className="main-navbar">
       <div className="logo">
-        <Link to="/">
+        <Link to="/" onClick={handleNormalLinkClick}>
           <img src={logoImg} alt="EduManage Logo" style={{ cursor: 'pointer' }} />
         </Link>
       </div>
 
-      <div className="menu">
-        <Link to="/">HOME</Link>
-        <Link to="/about">ABOUT US</Link>
-        <Link to="/contact">CONTACT US</Link>
+      {/* Hamburger button visible only on mobile screens */}
+      <button 
+        className={`hamburger-btn ${isMobileOpen ? 'active' : ''}`}
+        onClick={() => setIsMobileOpen(prev => !prev)}
+        aria-label="Toggle navigation menu"
+      >
+        <i className={isMobileOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars"}></i>
+      </button>
+
+      <div className={`menu ${isMobileOpen ? 'active' : ''}`}>
+        <Link to="/" onClick={handleNormalLinkClick}>HOME</Link>
+        <Link to="/about" onClick={handleNormalLinkClick}>ABOUT US</Link>
+        <Link to="/contact" onClick={handleNormalLinkClick}>CONTACT US</Link>
         
-        <div className={`dropdown ${showDropdown ? 'show' : ''}`} onMouseLeave={() => setShowDropdown(false)}>
+        <div 
+          className={`dropdown ${showDropdown ? 'show' : ''}`} 
+          onMouseEnter={() => setShowDropdown(true)}
+          onMouseLeave={() => setShowDropdown(false)}
+        >
           <button 
             className="dropbtn" 
             onClick={() => setShowDropdown(prev => !prev)}
@@ -49,19 +75,19 @@ export default function Navbar() {
             INFO <i className="fa-solid fa-caret-down"></i>
           </button>
           <div className="dropdown-content" style={{ display: showDropdown ? 'block' : 'none' }}>
-            <Link to="/faq" onClick={() => setShowDropdown(false)}>FAQ</Link>
-            <Link to="/privacy" onClick={() => setShowDropdown(false)}>Privacy Policy</Link>
-            <Link to="/terms" onClick={() => setShowDropdown(false)}>Terms & Conditions</Link>
+            <Link to="/faq" onClick={handleLinkClick}>FAQ</Link>
+            <Link to="/privacy" onClick={handleLinkClick}>Privacy Policy</Link>
+            <Link to="/terms" onClick={handleLinkClick}>Terms & Conditions</Link>
           </div>
         </div>
 
         {currentUser ? (
           <>
-            <Link to={getDashboardPath()} style={{ color: 'gold' }}>{getDashboardLabel()}</Link>
+            <Link to={getDashboardPath()} onClick={handleNormalLinkClick} style={{ color: 'gold' }}>{getDashboardLabel()}</Link>
             <a href="#logout" onClick={handleLogout}>LOGOUT</a>
           </>
         ) : (
-          <Link to="/login">LOGIN</Link>
+          <Link to="/login" onClick={handleNormalLinkClick}>LOGIN</Link>
         )}
       </div>
     </div>
