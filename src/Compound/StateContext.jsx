@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const StateContext = createContext();
 export const useAppState = () => useContext(StateContext);
 
-const API = 'http://localhost:5000/api';
+const API = 'https://edumanage-backend-5y5v.onrender.com/api';
 
 export const StateProvider = ({ children }) => {
   const defaultState = {
