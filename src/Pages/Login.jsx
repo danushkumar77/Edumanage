@@ -13,14 +13,14 @@ export default function Login() {
   const [role, setRole] = useState('student');
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       alert('Please fill in both email and password fields.');
       return;
     }
 
-    const res = login(role, email, password);
+    const res = await login(role, email, password);
     if (res.success) {
       if (role === 'admin') {
         navigate('/admin');

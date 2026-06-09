@@ -36,12 +36,24 @@ export default function AdminDashboard() {
   // Administrator Profile state
   const [adminProfile, setAdminProfile] = useState(() => {
     try {
-      const stored = localStorage.getItem('admin_profile');
+      const currentEmail = JSON.parse(localStorage.getItem('currentUser'))?.email || 'admin@edumanage.com';
+      const stored = localStorage.getItem(`admin_profile_${currentEmail}`);
       if (stored) return JSON.parse(stored);
     } catch (e) {}
+    
+    let defaultEmail = 'admin@edumanage.com';
+    let defaultName = 'Danushkumar';
+    try {
+      const currentUserObj = JSON.parse(localStorage.getItem('currentUser'));
+      if (currentUserObj && currentUserObj.email) {
+        defaultEmail = currentUserObj.email;
+        defaultName = currentUserObj.name || (defaultEmail.includes('suryasekar') ? 'Suryasekar' : 'Danushkumar');
+      }
+    } catch (e) {}
+
     return {
-      name: 'Danushkumar VS',
-      email: 'admin@edumanage',
+      name: defaultName,
+      email: defaultEmail,
       phone: '+91 99999 88888',
       office: 'Central ERP Command Center, Tech Block 1',
       role: 'Full Stack Developer'
@@ -206,9 +218,9 @@ export default function AdminDashboard() {
   };
 
   // Departments CRUD
-  const handleDeptFormSubmit = (e) => {
+  const handleDeptFormSubmit = async (e) => {
     e.preventDefault();
-    const res = registerDept(deptForm);
+    const res = await registerDept(deptForm);
     if (res.success) {
       setShowDeptModal(false);
       setDeptForm({ code: '', name: '' });
@@ -238,9 +250,9 @@ export default function AdminDashboard() {
     setShowCourseModal(true);
   };
 
-  const handleCourseFormSubmit = (e) => {
+  const handleCourseFormSubmit = async (e) => {
     e.preventDefault();
-    const res = registerCourse(courseForm);
+    const res = await registerCourse(courseForm);
     if (res.success) {
       setShowCourseModal(false);
       triggerToast(`Added course syllabus successfully!`);
@@ -345,7 +357,8 @@ export default function AdminDashboard() {
 
   const handleAdminProfileSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem('admin_profile', JSON.stringify(adminProfile));
+    const currentEmail = currentUser?.email || adminProfile.email || 'admin@edumanage.com';
+    localStorage.setItem(`admin_profile_${currentEmail}`, JSON.stringify(adminProfile));
     triggerToast('Administrator profile settings saved successfully!');
 
     setTimeout(() => {
