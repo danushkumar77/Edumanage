@@ -120,8 +120,8 @@ app.post('/api/application', async (req, res) => {
 // Get latest application (for admin notification)
 app.get('/api/application/latest', async (req, res) => {
   try {
-    const app = await Application.findOne().sort({ createdAt: -1 });
-    res.json(app);
+    const latest = await Application.findOne().sort({ createdAt: -1 });
+    res.json(latest);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
