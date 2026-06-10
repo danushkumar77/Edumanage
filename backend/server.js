@@ -39,7 +39,7 @@ app.post('/api/login', async (req, res) => {
       const admins = [
         { email: 'admin@edumanage.com', passwords: ['admin@1', 'admin123'], name: 'Danushkumar' },
         { email: 'admin@edumanage', passwords: ['admin@1', 'admin123'], name: 'Danushkumar' },
-        { email: 'suryasekar626@edumanage.com', passwords: ['surya@123'], name: 'Suryasekar' }
+        { email: 'suryasekar626@gmail.com', passwords: ['surya@123'], name: 'Suryasekar' }
       ];
       const admin = admins.find(a => a.email === cleanEmail && a.passwords.includes(cleanPwd));
       if (admin) {
