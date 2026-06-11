@@ -16,19 +16,38 @@ export default function About() {
     <>
       <Navbar />
 
-      <div className="page-hero">
-        <h1>About Us</h1>
-        <p>EduManage is a modern, digitalized platform designed to elevate college administration and learning.</p>
-      </div>
-
-      <div className="container py-5">
-        <h2 className="section-title">About the Project</h2>
-        <p className="text-center">
-          The College Management System is a web-based platform developed to
-          automate and simplify academic and administrative activities. It helps
-          to manage students, faculty, attendance, exams, courses and
-          communication in one centralized system.
-        </p>
+      <div className="about-page-hero">
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-md-10 mx-auto text-center">
+              <div>
+                <h1 style={{ 
+                  color: '#ffffff', 
+                  fontWeight: 'bold', 
+                  margin: '0 0 15px 0', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '1.5px', 
+                  fontSize: '44px'
+                }}>
+                  About Us
+                </h1>
+                <p style={{ 
+                  fontSize: '16px', 
+                  lineHeight: '1.8', 
+                  color: 'rgba(255, 255, 255, 0.9)', 
+                  margin: '0 auto',
+                  maxWidth: '800px',
+                  fontWeight: '400'
+                }}>
+                  The College Management System is a web-based platform developed to
+                  automate and simplify academic and administrative activities. It helps
+                  to manage students, faculty, attendance, exams, courses and
+                  communication in one centralized system.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="blue-section">

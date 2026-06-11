@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../Compound/Navbar';
 import Footer from '../Compound/Footer';
 import '../Asset/CSS/style.css';
+import contactImg from '../Asset/Images/contact_illustration.png';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
@@ -82,21 +83,28 @@ export default function Contact() {
 
           {/* Contact Info */}
           <div className="col-12 col-md-5">
-            <div className="contact-info" style={{ background: '#0026ff', color: 'white', padding: '30px', borderRadius: '15px', height: '100%' }}>
-              <h3 style={{ marginBottom: '20px' }}>College Information</h3>
-              <p>
-                📍 EduManage College,<br />
-                Erode, Tamil Nadu - 638001
-              </p>
-              <p>📞 +91 9876543210</p>
-              <p>📧 edumanage@college.com</p>
-              <p>🌐 www.edumanagecollege.com</p>
+            <div className="contact-info" style={{ background: '#0026ff', color: 'white', padding: '30px', borderRadius: '15px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                  <img src={contactImg} alt="Contact Support" className="floating-animation" style={{ maxWidth: '80%', height: 'auto', borderRadius: '10px', boxShadow: '0 8px 16px rgba(0,0,0,0.15)' }} />
+                </div>
+                <h3 style={{ marginBottom: '20px' }}>College Information</h3>
+                <p>
+                  📍 EduManage College,<br />
+                  Erode, Tamil Nadu - 638001
+                </p>
+                <p>📞 +91 9876543210</p>
+                <p>📧 edumanage@college.com</p>
+                <p>🌐 www.edumanagecollege.com</p>
+              </div>
               
-              <hr style={{ borderColor: 'white', margin: '20px 0' }} />
+              <div>
+                <hr style={{ borderColor: 'white', margin: '20px 0' }} />
 
-              <h4>Working Hours</h4>
-              <p>Monday - Friday : 9:00 AM - 5:00 PM</p>
-              <p>Saturday : 9:00 AM - 1:00 PM</p>
+                <h4>Working Hours</h4>
+                <p>Monday - Friday : 9:00 AM - 5:00 PM</p>
+                <p>Saturday : 9:00 AM - 1:00 PM</p>
+              </div>
             </div>
           </div>
         </div>

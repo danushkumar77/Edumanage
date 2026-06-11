@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../Compound/Navbar';
 import Footer from '../Compound/Footer';
 import '../Asset/CSS/style.css';
+import faqImg from '../Asset/Images/faq_illustration.png';
 
 export default function FAQ() {
   const [activeIdx, setActiveIdx] = useState(null);
@@ -32,34 +33,57 @@ export default function FAQ() {
         <p>Find answers to common questions about EduManage College Management System.</p>
       </div>
 
-      <div className="faq-container" style={{ width: '90%', maxWidth: '900px', margin: '50px auto' }}>
-        {faqs.map((faq, idx) => (
-          <div key={idx} className={`faq-card ${activeIdx === idx ? 'active' : ''}`} style={{ background: 'white', borderRadius: '15px', marginBottom: '15px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)', overflow: 'hidden' }}>
-            <div 
-              className="faq-question" 
-              onClick={() => toggleFaq(idx)}
-              style={{ padding: '20px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-            >
-              <span>{faq.q}</span>
-              <i 
-                className={`fa-solid ${activeIdx === idx ? 'fa-chevron-up' : 'fa-chevron-down'}`}
-                style={{ color: '#0026ff', transition: 'transform 0.2s' }}
-              ></i>
-            </div>
-            <div 
-              className="faq-answer" 
-              style={{ 
-                maxHeight: activeIdx === idx ? '250px' : '0', 
-                overflow: 'hidden', 
-                transition: 'max-height 0.4s ease-out', 
-                background: '#f8fbff', 
-                lineHeight: '1.7' 
-              }}
-            >
-              <p style={{ padding: '20px', margin: 0 }}>{faq.a}</p>
+      <div className="container faq-section" style={{ padding: '60px 0' }}>
+        <div className="row g-4 align-items-start">
+          {/* FAQ Illustration */}
+          <div className="col-12 col-md-5 text-center">
+            <div className="faq-image-box" style={{ background: 'white', padding: '30px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', border: '1px solid #eef1ff' }}>
+              <img 
+                src={faqImg} 
+                alt="FAQ Helpdesk" 
+                className="page-illustration floating-animation" 
+                style={{ maxWidth: '90%', display: 'inline-block', marginBottom: '20px' }} 
+              />
+              <h3 style={{ color: '#0026ff', fontWeight: 'bold' }}>Got Questions?</h3>
+              <p style={{ color: '#4b5563', fontSize: '15px' }}>
+                Browse through our frequently asked questions to understand how the system manages academic registries, attendance, results, and invoices.
+              </p>
             </div>
           </div>
-        ))}
+
+          {/* Accordion Questions */}
+          <div className="col-12 col-md-7">
+            <div className="faq-container" style={{ width: '100%', margin: '0' }}>
+              {faqs.map((faq, idx) => (
+                <div key={idx} className={`faq-card ${activeIdx === idx ? 'active' : ''}`} style={{ background: 'white', borderRadius: '15px', marginBottom: '15px', boxShadow: '0 5px 20px rgba(0,0,0,0.08)', overflow: 'hidden' }}>
+                  <div 
+                    className="faq-question" 
+                    onClick={() => toggleFaq(idx)}
+                    style={{ padding: '20px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                  >
+                    <span>{faq.q}</span>
+                    <i 
+                      className={`fa-solid ${activeIdx === idx ? 'fa-chevron-up' : 'fa-chevron-down'}`}
+                      style={{ color: '#0026ff', transition: 'transform 0.2s' }}
+                    ></i>
+                  </div>
+                  <div 
+                    className="faq-answer" 
+                    style={{ 
+                      maxHeight: activeIdx === idx ? '250px' : '0', 
+                      overflow: 'hidden', 
+                      transition: 'max-height 0.4s ease-out', 
+                      background: '#f8fbff', 
+                      lineHeight: '1.7' 
+                    }}
+                  >
+                    <p style={{ padding: '20px', margin: 0 }}>{faq.a}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
       <Footer />
