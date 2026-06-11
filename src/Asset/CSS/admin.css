@@ -21,18 +21,6 @@
     --admin-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-[data-theme="dark"] {
-    --admin-bg: #0b0f19;
-    --admin-card-bg: #131b2e;
-    --admin-border: #1e293b;
-    --admin-text: #f8fafc;
-    --admin-text-muted: #94a3b8;
-    
-    --admin-success-bg: rgba(52, 211, 153, 0.15);
-    --admin-danger-bg: rgba(248, 113, 113, 0.15);
-    --admin-warning-bg: rgba(251, 191, 36, 0.15);
-    --admin-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
 
 body {
     background-color: var(--admin-bg) !important;
@@ -127,25 +115,25 @@ body {
 .admin-pill-btn:hover {
     border-color: var(--admin-primary) !important;
     color: var(--admin-primary) !important;
+    background: #f8fafc !important;
     background-color: #f8fafc !important;
+}
+.admin-pill-btn:hover * {
+    color: var(--admin-primary) !important;
 }
 
 .admin-pill-btn.active {
-    background-color: #eef2ff !important;
-    color: var(--admin-primary) !important;
+    background-color: var(--admin-primary) !important;
+    background: var(--admin-primary) !important;
+    color: #ffffff !important;
     border-color: var(--admin-primary) !important;
-    box-shadow: 0 4px 12px rgba(0, 38, 255, 0.08) !important;
+    box-shadow: 0 4px 12px rgba(0, 38, 255, 0.2) !important;
+}
+.admin-pill-btn.active * {
+    color: #ffffff !important;
 }
 
-[data-theme="dark"] .admin-pill-btn:hover {
-    background-color: #1e293b !important;
-}
 
-[data-theme="dark"] .admin-pill-btn.active {
-    background-color: rgba(0, 38, 255, 0.25) !important;
-    color: #ffd700 !important; /* Gold text in dark mode active tab */
-    border-color: var(--admin-primary) !important;
-}
 
 
 

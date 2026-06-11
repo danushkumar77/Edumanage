@@ -31,7 +31,7 @@ export default function AdminDashboard() {
   const [facultySearch, setFacultySearch] = useState('');
 
   // Theme state
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState('light');
 
   // Administrator Profile state
   const [adminProfile, setAdminProfile] = useState(() => {
@@ -125,9 +125,9 @@ export default function AdminDashboard() {
 
   // Sync theme attribute
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('theme', 'light');
+  }, []);
 
   // Auth Guard
   useEffect(() => {

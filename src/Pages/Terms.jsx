@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from '../Compound/Navbar';
 import Footer from '../Compound/Footer';
 import '../Asset/CSS/style.css';
-import termsImg from '../Asset/Images/terms_conditions.png';
 
 export default function Terms() {
   return (
@@ -15,9 +14,9 @@ export default function Terms() {
       </div>
 
       <div className="container py-5">
-        <div className="row g-4 align-items-start">
-          {/* Terms content */}
-          <div className="col-12 col-md-7">
+        <div className="row justify-content-center">
+          {/* Terms content - Centered single column for premium readability */}
+          <div className="col-12 col-lg-10">
             <div className="terms-container" style={{ width: '100%', maxWidth: '100%', margin: '0', background: 'white', padding: '40px', borderRadius: '20px', boxShadow: '0 15px 45px rgba(0,0,0,0.05)', border: '1px solid #eef1ff' }}>
               <div className="terms-update" style={{ fontSize: '13px', color: '#718096', marginBottom: '30px', borderBottom: '1px solid #edf2f7', paddingBottom: '15px' }}>
                 <strong>Last Updated:</strong> May 31, 2026 &bull; <strong>Agreement Version:</strong> 2.4
@@ -113,22 +112,6 @@ export default function Terms() {
                   <li style={{ fontSize: '15px', lineHeight: '1.8', color: '#4a5568', marginBottom: '0' }}>Impersonating another student, professor, or admin credential.</li>
                 </ul>
               </div>
-            </div>
-          </div>
-
-          {/* Terms Illustration Sidebar */}
-          <div className="col-12 col-md-5 text-center">
-            <div style={{ background: 'white', padding: '30px', borderRadius: '20px', boxShadow: '0 15px 45px rgba(0,0,0,0.05)', border: '1px solid #eef1ff', position: 'sticky', top: '100px' }}>
-              <img 
-                src={termsImg} 
-                alt="Terms and Conditions Checklist" 
-                className="page-illustration floating-animation" 
-                style={{ width: '100%', maxWidth: '100%', display: 'inline-block', marginBottom: '20px' }} 
-              />
-              <h3 style={{ color: '#0026ff', fontWeight: 'bold' }}>Portal Agreement</h3>
-              <p style={{ color: '#4b5563', fontSize: '14px', lineHeight: '1.6' }}>
-                By logging in and using the EduManage college portal services, you agree to these guidelines and accept responsibility for maintaining academic honesty and account privacy.
-              </p>
             </div>
           </div>
         </div>

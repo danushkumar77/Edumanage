@@ -666,19 +666,34 @@ button[type="submit"],
     color: #000000 !important;
 }
 
-/* 2. Active Tab Pill Button Premium Style - Soft light blue background with dark blue border & black text */
+/* 2. Active Tab Pill Button Premium Style - Solid blue background with white text & icons */
 .dash-pill-btn.active,
 .admin-pill-btn.active {
-    background-color: #eef2ff !important;
-    background: #eef2ff !important;
-    color: #000000 !important;
+    background-color: #0026ff !important;
+    background: #0026ff !important;
+    color: #ffffff !important;
     border: 1px solid #0026ff !important;
     border-color: #0026ff !important;
-    box-shadow: 0 4px 12px rgba(0, 38, 255, 0.08) !important;
+    box-shadow: 0 4px 12px rgba(0, 38, 255, 0.2) !important;
 }
 .dash-pill-btn.active *,
 .admin-pill-btn.active * {
-    color: #000000 !important;
+    color: #ffffff !important;
+}
+
+/* Hover Tab Pill Button Style - Light gray background with blue text & icons */
+.dash-pill-btn:hover,
+.admin-pill-btn:hover {
+    background: #f8fafc !important;
+    background-color: #f8fafc !important;
+    color: #0026ff !important;
+    border: 1px solid #0026ff !important;
+    border-color: #0026ff !important;
+    box-shadow: 0 2px 8px rgba(0, 38, 255, 0.1) !important;
+}
+.dash-pill-btn:hover *,
+.admin-pill-btn:hover * {
+    color: #0026ff !important;
 }
 
 /* 3. Primary CTA buttons (Start Button, Submit, Admin, Primary buttons) light background support */

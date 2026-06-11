@@ -110,14 +110,22 @@ body {
 .dash-pill-btn:hover {
     border-color: var(--dash-primary) !important;
     color: var(--dash-primary) !important;
+    background: #f8fafc !important;
     background-color: #f8fafc !important;
+}
+.dash-pill-btn:hover * {
+    color: var(--dash-primary) !important;
 }
 
 .dash-pill-btn.active {
-    background-color: #eef2ff !important; /* Soft modern light blue background */
-    color: var(--dash-primary) !important; /* Primary rich blue text */
+    background-color: var(--dash-primary) !important; /* Solid modern primary blue background */
+    background: var(--dash-primary) !important;
+    color: #ffffff !important; /* White text for contrast */
     border-color: var(--dash-primary) !important;
-    box-shadow: 0 4px 12px rgba(0, 38, 255, 0.08) !important;
+    box-shadow: 0 4px 12px rgba(0, 38, 255, 0.2) !important;
+}
+.dash-pill-btn.active * {
+    color: #ffffff !important; /* White icons */
 }
 
 
